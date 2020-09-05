@@ -64,21 +64,26 @@ class App extends Component {
     this.setState({ ...INITIAL_STATE });
   };
 
-  haveСontacts = () => {
+  isRenderContactList = () => {
     const visibleContacts = this.getVisibleContacts();
 
     if (visibleContacts.length > 0) {
       return (
-        <>
-          <Filter stateData={this.state} onGetInputData={this.getInputData} />
-          <ContactList
-            visibleContacts={visibleContacts}
-            onRemoveContact={this.removeContact}
-          />
-        </>
+        <ContactList
+          visibleContacts={visibleContacts}
+          onRemoveContact={this.removeContact}
+        />
       );
     } else {
       return <p className={s.noContacts}>No contact</p>;
+    }
+  };
+
+  isRenderFilter = () => {
+    if (this.state.contacts.length > 0) {
+      return (
+        <Filter stateData={this.state} onGetInputData={this.getInputData} />
+      );
     }
   };
 
@@ -93,7 +98,8 @@ class App extends Component {
         />
         <h2 className={s.title}>Contacts</h2>
 
-        {this.haveСontacts()}
+        {this.isRenderFilter()}
+        {this.isRenderContactList()}
       </section>
     );
   }
