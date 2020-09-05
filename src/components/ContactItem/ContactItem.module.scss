@@ -1,0 +1,57 @@
+.contactItem {
+  min-height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.dataBlock {
+  width: 100%;
+  display: flex;
+}
+
+.sequentialТumber {
+  width: 10%;
+}
+
+.name {
+  width: 60%;
+}
+
+.phoneNumber {
+}
+
+.removeBtn {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  font-size: 0;
+  border: none;
+  border-radius: 3px;
+  background: #ff7272;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: '';
+    width: 90%;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    background: #000;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}

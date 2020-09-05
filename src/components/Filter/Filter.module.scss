@@ -1,0 +1,12 @@
+.label {
+  & span {
+    margin-bottom: 5px;
+    display: block;
+    text-align: center;
+  }
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+}
