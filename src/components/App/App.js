@@ -34,17 +34,30 @@ class App extends Component {
     const { name, number } = this.state;
 
     if (name && number) {
-      const contact = {
-        id: uuidv4(),
-        name: name,
-        number: number,
-      };
-
-      this.setState(prevState => {
-        return prevState.contacts.push(contact);
+      const isContact = this.state.contacts.find(el => {
+        if (el.name.toLowerCase() === name.toLowerCase()) {
+          notification['info'](
+            'A contact with the same Name already exists',
+            'Info',
+          );
+          return true;
+        }
+        return false;
       });
 
-      this.reset();
+      if (!isContact) {
+        const contact = {
+          id: uuidv4(),
+          name: name,
+          number: number,
+        };
+
+        this.setState(prevState => {
+          return prevState.contacts.push(contact);
+        });
+
+        this.reset();
+      }
     } else {
       notification['error']('You did not enter a Name or Number', 'Error');
     }
