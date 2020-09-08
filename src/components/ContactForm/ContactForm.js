@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import LabelInput from '../LabelInput/LabelInput';
 
 import s from './ContactForm.module.scss';
 
-class ContactForm extends Component {
-  render() {
-    const { onCreateContact } = this.props;
+const ContactForm = ({ onCreateContact, ...otherProps }) => {
+  return (
+    <form className={s.contactForm} onSubmit={onCreateContact}>
+      <div className={s.wrapper}>
+        <LabelInput title="Name" name="name" {...otherProps} />
+        <LabelInput title="Number" name="number" {...otherProps} />
+      </div>
 
-    return (
-      <form className={s.contactForm} onSubmit={onCreateContact}>
-        <div className={s.wrapper}>
-          <LabelInput title="Name" name="name" {...this.props} />
-          <LabelInput title="Number" name="number" {...this.props} />
-        </div>
-        <button className={s.btnForm} type="submit">
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+      <button className={s.btnForm} type="submit">
+        Add contact
+      </button>
+    </form>
+  );
+};
 
 export default ContactForm;

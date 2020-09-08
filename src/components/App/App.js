@@ -65,6 +65,7 @@ class App extends Component {
 
   removeContact = contactId => {
     this.setState(prevState => {
+      console.log(contactId);
       return {
         contacts: prevState.contacts.filter(
           contact => contact.id !== contactId,
@@ -77,42 +78,36 @@ class App extends Component {
     this.setState({ ...INITIAL_STATE });
   };
 
-  isRenderContactList = () => {
-    const visibleContacts = this.getVisibleContacts();
-
-    if (visibleContacts.length > 0) {
-      return (
-        <ContactList
-          visibleContacts={visibleContacts}
-          onRemoveContact={this.removeContact}
-        />
-      );
-    } else {
-      return <p className={s.noContacts}>No contact</p>;
-    }
-  };
-
-  isRenderFilter = () => {
-    if (this.state.contacts.length > 0) {
-      return (
-        <Filter stateData={this.state} onGetInputData={this.getInputData} />
-      );
-    }
-  };
-
   render() {
+    const { contacts } = this.state;
+    const visibleContacts = this.getVisibleContacts();
+    const isShowFilter = contacts.length > 1;
+    const isShowContacts = visibleContacts.length > 0;
+
     return (
       <section className={s.phonebook}>
         <h1 className={s.title}>Phonebook</h1>
+
         <ContactForm
           stateData={this.state}
-          onGetInputData={this.getInputData}
+          onChange={this.getInputData}
           onCreateContact={this.createContact}
         />
+
         <h2 className={s.title}>Contacts</h2>
 
-        {this.isRenderFilter()}
-        {this.isRenderContactList()}
+        {isShowFilter && (
+          <Filter stateData={this.state} onChange={this.getInputData} />
+        )}
+
+        {isShowContacts && (
+          <ContactList
+            visibleContacts={visibleContacts}
+            onRemoveContact={this.removeContact}
+          />
+        )}
+
+        {!isShowContacts && <p className={s.noContacts}>No contact</p>}
       </section>
     );
   }

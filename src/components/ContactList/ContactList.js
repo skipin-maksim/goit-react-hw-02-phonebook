@@ -1,15 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import ContactItem from '../ContactItem/ContactItem';
+import ContactItem from './ContactItem';
 
-class ContactList extends Component {
-  render() {
-    return (
-      <ul className="ContactList">
-        <ContactItem {...this.props} />
-      </ul>
-    );
-  }
-}
+const ContactList = ({ visibleContacts, onRemoveContact }) => {
+  return (
+    <ul className="ContactList">
+      {visibleContacts.map(({ id, ...otherProps }, idx) => {
+        return (
+          <ContactItem
+            key={id}
+            idx={idx}
+            id={id}
+            onRemoveContact={onRemoveContact}
+            {...otherProps}
+          />
+        );
+      })}
+    </ul>
+  );
+};
 
 export default ContactList;

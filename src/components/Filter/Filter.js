@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import LabelInput from '../LabelInput/LabelInput';
 
-class Filter extends Component {
-  render() {
-    return (
-      <LabelInput title="Find contacts by name" name="filter" {...this.props} />
-    );
-  }
-}
+const Filter = props => {
+  return <LabelInput title="Find contacts by name" name="filter" {...props} />;
+};
 
 export default Filter;
