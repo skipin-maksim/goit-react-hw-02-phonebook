@@ -53,7 +53,10 @@ class App extends Component {
         };
 
         this.setState(prevState => {
-          return prevState.contacts.push(contact);
+          console.log([...prevState.contacts, contact]);
+          return {
+            contacts: [...prevState.contacts, contact],
+          };
         });
 
         this.reset();
@@ -75,7 +78,7 @@ class App extends Component {
   };
 
   reset = () => {
-    this.setState({ ...INITIAL_STATE });
+    this.setState({ filter: '', name: '', number: '' });
   };
 
   render() {
