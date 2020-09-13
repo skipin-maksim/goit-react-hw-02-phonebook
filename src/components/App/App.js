@@ -26,6 +26,24 @@ class App extends Component {
     );
   };
 
+  componentDidMount() {
+    const isContacts = localStorage.getItem('contacts');
+
+    if (isContacts) {
+      this.setState({ contacts: JSON.parse(isContacts) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+
+    if (prevState.contacts === this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   getInputData = (name, value) => this.setState({ [name]: value });
 
   createContact = e => {
@@ -53,7 +71,6 @@ class App extends Component {
         };
 
         this.setState(prevState => {
-          console.log([...prevState.contacts, contact]);
           return {
             contacts: [...prevState.contacts, contact],
           };
@@ -68,7 +85,6 @@ class App extends Component {
 
   removeContact = contactId => {
     this.setState(prevState => {
-      console.log(contactId);
       return {
         contacts: prevState.contacts.filter(
           contact => contact.id !== contactId,
