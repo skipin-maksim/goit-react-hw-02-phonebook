@@ -64,7 +64,7 @@ class App extends Component {
       });
 
       if (!isContact) {
-        const contact = {
+        const newContact = {
           id: uuidv4(),
           name: name,
           number: number,
@@ -72,7 +72,7 @@ class App extends Component {
 
         this.setState(prevState => {
           return {
-            contacts: [...prevState.contacts, contact],
+            contacts: [...prevState.contacts, newContact],
           };
         });
 
