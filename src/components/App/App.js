@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import notification from 'toastr';
+import { CSSTransition } from 'react-transition-group';
 
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
 import ContactList from '../ContactList/ContactList';
+import Notification from '../Notification/Notification';
 
 import s from './App.module.scss';
+import fade from '../../animations/fade.module.scss';
+import slide from '../../animations/slide.module.scss';
 
 const INITIAL_STATE = {
   contacts: [],
   filter: '',
   name: '',
   number: '',
+  notification: {
+    status: false,
+    type: '',
+    text: '',
+  },
 };
 
 class App extends Component {
@@ -54,10 +62,11 @@ class App extends Component {
     if (name && number) {
       const isContact = this.state.contacts.find(el => {
         if (el.name.toLowerCase() === name.toLowerCase()) {
-          notification['info'](
-            'A contact with the same Name already exists',
-            'Info',
-          );
+          const type = 'Info';
+          const text = 'A contact with the same Name already exists';
+
+          this.toggleNotificationWithInfo(type, text);
+
           return true;
         }
         return false;
@@ -79,8 +88,34 @@ class App extends Component {
         this.reset();
       }
     } else {
-      notification['error']('You did not enter a Name or Number', 'Error');
+      const type = 'Error';
+      const text = 'You did not enter a Name or Number';
+
+      this.toggleNotificationWithInfo(type, text);
     }
+  };
+
+  toggleNotificationWithInfo = (type, text) => {
+    this.setState({
+      notification: {
+        status: true,
+        type: type,
+        text: text,
+      },
+    });
+
+    setTimeout(() => {
+      this.resetStateNotification();
+    }, 1500);
+  };
+
+  resetStateNotification = () => {
+    this.setState({
+      notification: {
+        ...this.state.notification,
+        status: false,
+      },
+    });
   };
 
   removeContact = contactId => {
@@ -98,36 +133,53 @@ class App extends Component {
   };
 
   render() {
-    const { contacts } = this.state;
+    const { contacts, notification } = this.state;
+    const { type, text } = notification;
     const visibleContacts = this.getVisibleContacts();
     const isShowFilter = contacts.length > 1;
     const isShowContacts = visibleContacts.length > 0;
 
     return (
-      <section className={s.phonebook}>
-        <h1 className={s.title}>Phonebook</h1>
+      <>
+        {/* {notification.status && <Notification title={title} text={text} />} */}
 
-        <ContactForm
-          stateData={this.state}
-          onChange={this.getInputData}
-          onCreateContact={this.createContact}
-        />
+        <CSSTransition
+          in={notification.status}
+          classNames={slide}
+          timeout={300}
+          unmountOnExit
+        >
+          <Notification type={type} text={text} />
+        </CSSTransition>
 
-        <h2 className={s.title}>Contacts</h2>
+        <section className={s.phonebook}>
+          <h1 className={s.title}>Phonebook</h1>
 
-        {isShowFilter && (
-          <Filter stateData={this.state} onChange={this.getInputData} />
-        )}
+          <ContactForm
+            stateData={this.state}
+            onChange={this.getInputData}
+            onCreateContact={this.createContact}
+          />
 
-        {isShowContacts && (
+          <h2 className={s.title}>Contacts</h2>
+
+          <CSSTransition
+            in={isShowFilter}
+            classNames={fade}
+            timeout={250}
+            unmountOnExit
+          >
+            <Filter stateData={this.state} onChange={this.getInputData} />
+          </CSSTransition>
+
           <ContactList
             visibleContacts={visibleContacts}
             onRemoveContact={this.removeContact}
           />
-        )}
 
-        {!isShowContacts && <p className={s.noContacts}>No contact</p>}
-      </section>
+          {!isShowContacts && <p className={s.noContacts}>No contact</p>}
+        </section>
+      </>
     );
   }
 }

@@ -35,4 +35,9 @@
   &:focus {
     border: 1px solid #116823;
   }
+
+  &:disabled {
+    background-color: #a9ffbc;
+    cursor: default;
+  }
 }

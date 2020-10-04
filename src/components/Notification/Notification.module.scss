@@ -1,0 +1,29 @@
+.Notification {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  color: #fff;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+.NotificationError {
+  composes: Notification;
+  background-color: rgb(240, 88, 88);
+}
+.NotificationInfo {
+  composes: Notification;
+  background-color: rgb(88, 116, 240);
+}
+
+.title {
+  padding: 10px 20px;
+  border-bottom: 1px solid #fff;
+}
+
+.text {
+  padding: 20px 20px;
+  text-align: center;
+  font-size: 14px;
+}

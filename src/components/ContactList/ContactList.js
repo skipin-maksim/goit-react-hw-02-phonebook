@@ -1,22 +1,26 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import ContactItem from './ContactItem';
 
+import scale from '../../animations/scale.module.scss';
+
 const ContactList = ({ visibleContacts, onRemoveContact }) => {
   return (
-    <ul className="ContactList">
+    <TransitionGroup component="ul" className="ContactList">
       {visibleContacts.map(({ id, ...otherProps }, idx) => {
         return (
-          <ContactItem
-            key={id}
-            idx={idx}
-            id={id}
-            onRemoveContact={onRemoveContact}
-            {...otherProps}
-          />
+          <CSSTransition key={id} timeout={250} classNames={scale}>
+            <ContactItem
+              idx={idx}
+              id={id}
+              onRemoveContact={onRemoveContact}
+              {...otherProps}
+            />
+          </CSSTransition>
         );
       })}
-    </ul>
+    </TransitionGroup>
   );
 };
 

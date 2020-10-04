@@ -1,0 +1,25 @@
+// #2 scale
+.enter {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.enterActive {
+  opacity: 1;
+  transform: scale(1.05);
+  transition: all 250ms linear;
+}
+
+.ectiveDone {
+  transform: scale(1);
+}
+
+.exit {
+  opacity: 1;
+  transform: scale(1.05);
+}
+.exitActive {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 250ms linear;
+}
