@@ -2,7 +2,7 @@ import React from 'react';
 
 import s from './LabelInput.module.scss';
 
-const LabelInput = ({ stateData, title, name, onChange }) => {
+const LabelInput = ({ stateData, title, name, onGetInputData }) => {
   return (
     <label className={s.labelFind}>
       <span>{title}</span>
@@ -11,7 +11,9 @@ const LabelInput = ({ stateData, title, name, onChange }) => {
         type="text"
         name={name}
         value={stateData[name]}
-        onChange={e => onChange(e.target.name, e.target.value)}
+        onChange={e => {
+          onGetInputData(e.target.name, e.target.value);
+        }}
       />
     </label>
   );
