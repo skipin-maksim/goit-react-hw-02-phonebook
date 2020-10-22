@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import contactsActions from '../../redux/contacts/contactsActions';
 
 import s from './ContactItem.module.scss';
 
@@ -22,4 +25,14 @@ const ContactItem = ({ name, number, id, idx, onRemoveContact }) => {
   );
 };
 
-export default ContactItem;
+const mapStateToProps = (state, ownProps) => {
+  const contact = state.contacts.items.find(item => item.id === ownProps.id);
+
+  return { ...contact };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onRemoveContact: () => dispatch(contactsActions.removeContact(ownProps.id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);

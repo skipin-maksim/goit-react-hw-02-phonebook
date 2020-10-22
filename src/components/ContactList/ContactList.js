@@ -12,14 +12,14 @@ const ContactList = ({ visibleContacts, onRemoveContact }) => {
     <>
       {isShowContacts && (
         <ul className="ContactList">
-          {visibleContacts.map(({ id, ...otherProps }, idx) => {
+          {visibleContacts.map(({ id }, idx) => {
             return (
               <ContactItem
                 key={id}
-                idx={idx}
                 id={id}
-                onRemoveContact={onRemoveContact}
-                {...otherProps}
+                idx={idx}
+                // onRemoveContact={onRemoveContact}
+                // {...otherProps}
               />
             );
           })}
@@ -40,8 +40,8 @@ const mapStateToProps = state => {
   return { visibleContacts: filteredContacts };
 };
 
-const mapDispatchToProps = {
-  onRemoveContact: contactsActions.removeContact,
-};
+// const mapDispatchToProps = {
+//   onRemoveContact: contactsActions.removeContact,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+export default connect(mapStateToProps)(ContactList);
