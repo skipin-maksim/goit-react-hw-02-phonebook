@@ -1,47 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Spinner from '../Spinner/Spinner';
 
-import contactsActions from '../../redux/contacts/contactsActions';
-
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
+import contactsOperations from '../../redux/contacts/contactsOperations';
 import ContactItem from './ContactItem';
 
-const ContactList = ({ visibleContacts, onRemoveContact }) => {
-  const isShowContacts = visibleContacts.length > 0;
+class ContactList extends Component {
+  componentDidMount() {
+    this.props.onFatchContacts();
+  }
+  render() {
+    const { visibleContacts, isLoading } = this.props;
+    const isShowContacts = visibleContacts.length > 0;
 
-  return (
-    <>
-      {isShowContacts && (
-        <ul className="ContactList">
-          {visibleContacts.map(({ id }, idx) => {
-            return (
-              <ContactItem
-                key={id}
-                id={id}
-                idx={idx}
-                // onRemoveContact={onRemoveContact}
-                // {...otherProps}
-              />
-            );
-          })}
-        </ul>
-      )}
-    </>
-  );
-};
+    return (
+      <>
+        {isLoading && <Spinner />}
+        {isShowContacts && (
+          <ul className="ContactList">
+            {visibleContacts.map(({ id }, idx) => {
+              return <ContactItem key={id} id={id} idx={idx} />;
+            })}
+          </ul>
+        )}
+      </>
+    );
+  }
+}
 
 const mapStateToProps = state => {
-  const { items, filter } = state.contacts;
-  const normalizedFilter = filter.toLowerCase();
-
-  const filteredContacts = items.filter(({ name }) =>
-    name.toLowerCase().includes(normalizedFilter),
-  );
-
-  return { visibleContacts: filteredContacts };
+  return {
+    visibleContacts: contactsSelectors.getVisibleContacts(state),
+    isLoading: contactsSelectors.getIsLoading(state),
+  };
 };
 
-// const mapDispatchToProps = {
-//   onRemoveContact: contactsActions.removeContact,
-// };
+const mapDispathToProps = {
+  onFatchContacts: contactsOperations.fetchContacts,
+};
 
-export default connect(mapStateToProps)(ContactList);
+export default connect(mapStateToProps, mapDispathToProps)(ContactList);

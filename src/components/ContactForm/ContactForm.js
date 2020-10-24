@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import notification from 'toastr';
 
-import contactsActions from '../../redux/contacts/contactsActions';
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
+import contactsOperations from '../../redux/contacts/contactsOperations';
 import LabelInput from '../LabelInput/LabelInput';
 
 import s from './ContactForm.module.scss';
@@ -69,11 +70,11 @@ class ContactForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  contactsItems: state.contacts.items,
+  contactsItems: contactsSelectors.getContacts(state),
 });
 
 const mapDispatchToProps = {
-  onAddContact: contactsActions.createContact,
+  onAddContact: contactsOperations.createContact,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
