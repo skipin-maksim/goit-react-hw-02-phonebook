@@ -2,12 +2,12 @@ import axios from 'axios';
 
 import contactsActions from './contactsActions';
 
-axios.defaults.baseURL = 'http://localhost:2000';
+// axios.defaults.baseURL = 'http://localhost:2000';
 
 const fetchContacts = () => dispatch => {
   dispatch(contactsActions.fetchRequest());
 
-  axios('/contacts')
+  axios('http://localhost:2000/contacts')
     .then(({ data }) => {
       dispatch(contactsActions.fetchSuccess(data));
     })
@@ -23,7 +23,7 @@ const createContact = (name, number) => dispatch => {
   dispatch(contactsActions.createContactRequest());
 
   axios
-    .post('/contacts', { name, number })
+    .post('http://localhost:2000/contacts', { name, number })
     .then(({ data }) => {
       dispatch(contactsActions.createContactSuccess(data));
     })
@@ -38,7 +38,7 @@ const removeContact = contactId => dispatch => {
   dispatch(contactsActions.removeContactRequest());
 
   axios
-    .delete(`/contacts/${contactId}`)
+    .delete(`http://localhost:2000/contacts/${contactId}`)
     .then(() => {
       dispatch(contactsActions.removeContactSuccess(contactId));
     })

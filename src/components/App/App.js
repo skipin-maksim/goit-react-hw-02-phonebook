@@ -1,31 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-import contactsSelectors from '../../redux/contacts/contactsSelectors';
-import ContactForm from '../ContactForm/ContactForm';
-import Filter from '../Filter/Filter';
-import ContactList from '../ContactList/ContactList';
+import Layout from '../Layout/Layout';
+import NavBar from '../NavBar/NavBar';
+import ContactsView from '../../views/ContactsView';
+import HomeView from '../../views/HomeView';
+import LoginView from '../../views/LoginView';
+import RegistartionView from '../../views/RegistartionView';
 
-import s from './App.module.scss';
-
-const App = ({ contactsItems }) => {
-  const isShowContacts = contactsItems.length > 0;
-
+export default function App() {
   return (
-    <section className={s.phonebook}>
-      <h1 className={s.title}>Phonebook</h1>
-      <ContactForm />
-      <Filter />
-
-      <h2 className={s.title}>Contacts</h2>
-      <ContactList />
-      {!isShowContacts && <p className={s.noContacts}>No contacts</p>}
-    </section>
+    <Layout>
+      <NavBar />
+      <Switch>
+        <Route path={'/'} exact component={HomeView} />
+        <Route path={'/contacts'} component={ContactsView} />
+        <Route path={'/login'} component={LoginView} />
+        <Route path={'/registartion'} component={RegistartionView} />
+      </Switch>
+    </Layout>
   );
-};
-
-const mapStateToProps = state => ({
-  contactsItems: contactsSelectors.getContacts(state),
-});
-
-export default connect(mapStateToProps)(App);
+}
