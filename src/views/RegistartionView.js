@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import authOperations from '../redux/auth/authOperations';
 
+import s from './views.module.scss';
+
 class RegistartionView extends Component {
   state = {
     name: '',
@@ -29,27 +31,42 @@ class RegistartionView extends Component {
   render() {
     const { name, email, password } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={s.form} onSubmit={this.handleSubmit}>
         <h2>Registartion form</h2>
-        <input
-          onChange={this.handleChange}
-          type="text"
-          name="name"
-          value={name}
-        />
-        <input
-          onChange={this.handleChange}
-          type="email"
-          name="email"
-          value={email}
-        />
-        <input
-          onChange={this.handleChange}
-          type="password"
-          name="password"
-          value={password}
-        />
-        <button type="submit">Registartion</button>
+        <label className={s.label}>
+          <span>Your name</span>
+          <input
+            onChange={this.handleChange}
+            type="text"
+            name="name"
+            value={name}
+            required
+          />
+        </label>
+        <label className={s.label}>
+          <span>Your email</span>
+          <input
+            onChange={this.handleChange}
+            type="email"
+            name="email"
+            value={email}
+            required
+          />
+        </label>
+        <label className={s.label}>
+          <span>Your password</span>
+          <input
+            onChange={this.handleChange}
+            type="password"
+            name="password"
+            value={password}
+            required
+          />
+        </label>
+
+        <button className={(s.btn, s.btnSubmit)} type="submit">
+          Registartion
+        </button>
       </form>
     );
   }

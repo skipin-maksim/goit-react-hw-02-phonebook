@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 html {
+  height: 100%;
   box-sizing: border-box;
 }
 
@@ -13,7 +14,7 @@ html {
 }
 
 body {
-  padding-bottom: 50px;
+  height: 100%;
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -49,6 +50,7 @@ input {
 
 .spinner {
   position: absolute;
-  top: 270px;
-  left: 80%;
+  top: 223px;
+  left: 50%;
+  transform: translateX(-50%);
 }

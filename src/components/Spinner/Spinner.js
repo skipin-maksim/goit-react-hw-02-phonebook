@@ -9,7 +9,7 @@ export default function spinner() {
       <Loader
         className="spinner"
         type="Puff"
-        color="#00BFFF"
+        color="#5dff80"
         height={30}
         width={30}
       />
