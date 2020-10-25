@@ -16,17 +16,22 @@
 
 .sequentialТumber {
   width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .name {
-  width: 60%;
+  width: 55%;
 }
 
 .phoneNumber {
+  font-size: 14px;
 }
 
 .removeBtn {
   position: relative;
+  right: 10px;
   width: 16px;
   height: 16px;
   font-size: 0;

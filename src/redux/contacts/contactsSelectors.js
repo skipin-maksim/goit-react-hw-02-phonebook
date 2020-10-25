@@ -13,10 +13,6 @@ const getVisibleContacts = createSelector(
   },
 );
 
-const f = createSelector([getContacts], (items, contactId) => {
-  return items.find(item => item.id === contactId);
-});
-
 const getTaskById = (state, contactId) => {
   const items = getContacts(state);
 

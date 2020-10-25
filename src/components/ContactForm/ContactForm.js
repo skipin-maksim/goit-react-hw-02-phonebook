@@ -5,6 +5,7 @@ import notification from 'toastr';
 import contactsSelectors from '../../redux/contacts/contactsSelectors';
 import contactsOperations from '../../redux/contacts/contactsOperations';
 import LabelInput from '../LabelInput/LabelInput';
+import MaskNumber from '../MaskNumber/MaskNumber';
 
 import s from './ContactForm.module.scss';
 
@@ -53,7 +54,7 @@ class ContactForm extends Component {
             stateData={this.state}
             onGetInputData={this.getInputData}
           />
-          <LabelInput
+          <MaskNumber
             title="Number"
             name="number"
             stateData={this.state}
