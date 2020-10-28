@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import s from '../NavBar/NavBar.module.scss';
+import routes from '../../routes';
 
 export default function AuthBlock() {
   return (
@@ -15,7 +16,7 @@ export default function AuthBlock() {
         <NavLink
           className={s.link}
           activeClassName={s.activeLink}
-          to="/registartion"
+          to={routes.RegistrationPage}
         >
           Registration
         </NavLink>

@@ -8,7 +8,8 @@ const onRemoveContact = (state, { payload }) =>
   state.filter(contact => contact.id !== payload);
 
 const items = createReducer([], {
-  [contactsActions.fetchSuccess]: (state, action) => action.payload,
+  [contactsActions.fetchRequest]: (state, { payload }) => payload,
+  [contactsActions.fetchSuccess]: (state, { payload }) => payload,
   [contactsActions.createContactSuccess]: onCreateReducer,
   [contactsActions.removeContactSuccess]: onRemoveContact,
 });
@@ -31,8 +32,15 @@ const loading = createReducer(false, {
   [contactsActions.removeContactError]: () => false,
 });
 
+const error = createReducer(null, {
+  [contactsActions.fetchError]: (state, { payload }) => payload,
+  [contactsActions.createContactError]: (state, { payload }) => payload,
+  [contactsActions.removeContactError]: (state, { payload }) => payload,
+});
+
 export default combineReducers({
   items,
   filter,
   loading,
+  error,
 });

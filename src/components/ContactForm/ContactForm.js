@@ -20,6 +20,9 @@ class ContactForm extends Component {
   addContact = e => {
     e.preventDefault();
 
+    e.target[0].blur();
+    e.target[1].blur();
+
     const { name, number } = this.state;
 
     if (name && number) {
@@ -47,6 +50,7 @@ class ContactForm extends Component {
   render() {
     return (
       <form className={s.contactForm} onSubmit={this.addContact}>
+        {this.props.isError && this.noData(this.props.isError)}
         <div className={s.wrapper}>
           <LabelInput
             title="Name"

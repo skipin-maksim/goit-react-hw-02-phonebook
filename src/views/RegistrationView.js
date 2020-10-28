@@ -5,7 +5,7 @@ import authOperations from '../redux/auth/authOperations';
 
 import s from './views.module.scss';
 
-class RegistartionView extends Component {
+class RegistrationView extends Component {
   state = {
     name: '',
     email: '',
@@ -30,9 +30,10 @@ class RegistartionView extends Component {
 
   render() {
     const { name, email, password } = this.state;
+
     return (
       <form className={s.form} onSubmit={this.handleSubmit}>
-        <h2>Registartion form</h2>
+        <h2>Registration form</h2>
         <label className={s.label}>
           <span>Your name</span>
           <input
@@ -65,7 +66,7 @@ class RegistartionView extends Component {
         </label>
 
         <button className={(s.btn, s.btnSubmit)} type="submit">
-          Registartion
+          Registration
         </button>
       </form>
     );
@@ -76,4 +77,4 @@ const mDTP = {
   onRegister: authOperations.register,
 };
 
-export default connect(null, mDTP)(RegistartionView);
+export default connect(null, mDTP)(RegistrationView);

@@ -1,12 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import authSelectors from '../../redux/auth/authSelectors';
 import NavUserMenu from '../NavUserMenu/NavUserMenu';
 import AuthBlock from '../AuthBlock/AuthBlock';
+import routes from '../../routes';
 
 import s from './NavBar.module.scss';
 
-export default function NavBar() {
+function NavBar({ isLogin }) {
   return (
     <header className={s.topHeader}>
       <nav className={s.topNav}>
@@ -21,20 +24,27 @@ export default function NavBar() {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              className={s.link}
-              activeClassName={s.activeLink}
-              to="/contacts"
-            >
-              Contacts
-            </NavLink>
-          </li>
+          {isLogin && (
+            <li>
+              <NavLink
+                className={s.link}
+                activeClassName={s.activeLink}
+                to={routes.ContactsPage}
+              >
+                Contacts
+              </NavLink>
+            </li>
+          )}
         </ul>
 
-        <AuthBlock />
-        {/* <NavUserMenu /> */}
+        {isLogin ? <NavUserMenu /> : <AuthBlock />}
       </nav>
     </header>
   );
 }
+
+const mapStateToProps = state => ({
+  isLogin: authSelectors.getIsLogin(state),
+});
+
+export default connect(mapStateToProps)(NavBar);

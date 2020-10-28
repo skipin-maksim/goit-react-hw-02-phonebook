@@ -2,51 +2,48 @@ import axios from 'axios';
 
 import contactsActions from './contactsActions';
 
-// axios.defaults.baseURL = 'http://localhost:2000';
+axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
 
-const fetchContacts = () => dispatch => {
+const fetchContacts = () => async dispatch => {
   dispatch(contactsActions.fetchRequest());
 
-  axios('http://localhost:2000/contacts')
-    .then(({ data }) => {
-      dispatch(contactsActions.fetchSuccess(data));
-    })
-    .catch(error => {
-      console.log(error);
+  try {
+    const { data } = await axios('/contacts');
 
-      dispatch(contactsActions.createContactError(error));
-      return [];
-    });
+    dispatch(contactsActions.fetchSuccess(data));
+  } catch (error) {
+    console.log(error);
+
+    dispatch(contactsActions.fetchError(error));
+  }
 };
 
-const createContact = (name, number) => dispatch => {
+const createContact = (name, number) => async dispatch => {
   dispatch(contactsActions.createContactRequest());
 
-  axios
-    .post('http://localhost:2000/contacts', { name, number })
-    .then(({ data }) => {
-      dispatch(contactsActions.createContactSuccess(data));
-    })
-    .catch(error => {
-      console.log(error);
+  try {
+    const { data } = await axios.post('/contacts', { name, number });
 
-      dispatch(contactsActions.createContactError(error));
-    });
+    dispatch(contactsActions.createContactSuccess(data));
+  } catch (error) {
+    console.log(error);
+
+    dispatch(contactsActions.createContactError(error));
+  }
 };
 
-const removeContact = contactId => dispatch => {
+const removeContact = contactId => async dispatch => {
   dispatch(contactsActions.removeContactRequest());
 
-  axios
-    .delete(`http://localhost:2000/contacts/${contactId}`)
-    .then(() => {
-      dispatch(contactsActions.removeContactSuccess(contactId));
-    })
-    .catch(error => {
-      console.log(error);
+  try {
+    await axios.delete(`/contacts/${contactId}`);
 
-      dispatch(contactsActions.removeContactError(error));
-    });
+    dispatch(contactsActions.removeContactSuccess(contactId));
+  } catch (error) {
+    console.log(error);
+
+    dispatch(contactsActions.removeContactError(error));
+  }
 };
 
 export default {
